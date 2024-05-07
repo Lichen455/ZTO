@@ -55,6 +55,5 @@ def main():
                 current_length = len(response)
         print("")
 
-
 if __name__ == "__main__":
     main()
