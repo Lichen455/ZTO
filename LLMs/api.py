@@ -2,7 +2,7 @@ import openai
 import os, json, random
 from zhipuai import ZhipuAI
 
-client = ZhipuAI(api_key="067b1242c4af8df48183316746161dbc.LLgSAKnjQz4Mj0Mu")
+client = ZhipuAI(api_key="a12935687eac698a342e739c4820ac4c.wor32LL9tJN0voEY")
 openai.api_key = "sk-GY7tkLBbSgTNcBuPDZ5JcBMFYY4VPoMGc4ZltTMbLvSpDILk"
 openai.api_base = "https://api.chatanywhere.com.cn/v1"
 
@@ -66,3 +66,26 @@ def use_Api(messages:list = []):
 
     b = ZhipuAI(messages)
     return b
+
+if __name__ == "__main__":
+    print(use_Api([
+        {"role": "system", "content": "你是一名人工智能出题助手，负责以如下格式生成编程题目，编程语言为Python，不需要解析"},
+        {"role": "user",
+         "content": "请严格按照与上文相同的格式，生成”难度很高“的编程判断题目"},
+        {"role": "assistant",
+         "content": "[题目] 在C++标准模板库中，可以使用 `<algorithm>` 头文件中的 `std::find_if` 函数对任意类型的容器进行查找，且该函数的搜索条件可以通过Lambda表达式或函数对象轻松自定义。 [答案] 正确"},
+        {"role": "user",
+         "content": "请严格按照与上文相同的格式，生成”难度很高“的编程判断题目"},
+        {"role": "assistant",
+         "content": "[题目] 在表达式 x+yz中， + 是作为成员函数重载的运算符， 是作为非成员函数重载的运算符。则 operator+ 有1个参数 [答案] 正确"},
+        {"role": "user",
+         "content": "请严格按照与上文相同的格式，生成”难度很高“的编程判断题目"},
+        {"role": "assistant",
+         "content": "[题目] 静态成员函数没有this指针 [答案] 正确"},
+        {"role": "user",
+         "content": "请严格按照与上文相同的格式，生成”难度很高“的编程判断题目"},
+        {"role": "assistant",
+         "content": "[题目] 构造函数、析构函数能被继承或取地址 [答案] 错误"},
+        {"role": "user",
+         "content": "请严格按照与上文相同的格式，创新生成难度很高的20道C++编程判断题目，题干尽量精简，不能与上文重复或相似，不能太简单，答案只能是正确或错误"}
+    ]))

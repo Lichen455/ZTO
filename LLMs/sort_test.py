@@ -1,10 +1,10 @@
 from LLMs import Gendemo
 from functools import partial
-
+import api
 
 
 PTuning_main = Gendemo.PTuning_main
-
+api=api.use_Api
 # 判断题
 def Judgment(language_p:int = 1,num:int=1):
 
@@ -27,7 +27,25 @@ def Judgment(language_p:int = 1,num:int=1):
 
     return
 #选择题
-def Choice(language_p:int = 1,num:int=1):
+def Choice(language_p:int = 1,num:int=1,content1 = ""):
+    if   language_p == 1:
+        data = api([
+        {"role": "system", "content": "你是一名人工智能出题助手，负责以如下格式生成编程选择题目，编程语言为C++"},
+        {"role": "user",
+         "content": "请严格按照与上文相同的格式，生成”难度很高“的编程选择题目"},
+        {"role": "assistant",
+         "content": "[题目] 在C++中，关于类的静态变量成员，以下哪项描述是正确的？\nA. 静态变量成员在每个对象实例中都有自己的独立副本。\nB. 静态变量成员在类定义外部初始化时，不需要使用作用域解析运算符。\nC. 静态变量成员的存储是按照类类型分配的，而不是按照对象实例分配的。\nD. 静态变量成员只能在类的静态成员函数内部访问。\n[答案] C [解析] 静态变量成员的存储是按照类类型分配的，而不是按照对象实例分配的。这意味着所有对象共享同一个静态变量成员，而不是每个对象都有自己的副本。"},
+        {"role": "user",
+         "content": "请严格按照与上文相同的格式，生成”难度很高“的编程选择题目"},
+        {"role": "assistant",
+         "content": "[题目] 设A是一个有不带参数的构造函数的类，fun是一个如下定义的函数：Afun(A&a){returna;}则在执行程序段{Aa; fun(a); }时，对A类的：①构造函数，②析构函数，③拷贝构造函数的调用顺序是（ ）\nA. ①③③②②②\nB. ①③②②\nC. ①②③② \nD. ①②③③②②\n[做题依据] 在执行程序段{A a; fun(a); }时，首先调用A类的构造函数①创建对象a，然后调用fun函数，由于fun函数的参数是引用类型，所以不会调用拷贝构造函数，但是fun函数的返回值是对象类型，所以会调用拷贝构造函数③创建一个临时对象，然后将这个临时对象赋值给fun函数的调用者，由于这里没有接收fun函数的返回值，所以这个临时对象会被立即销毁，调用析构函数②，最后在程序段结束时，对象a也会被销毁，调用析构函数②。因此，对A类的构造函数，析构函数，拷贝构造函数的调用顺序是①③②②，选项B正确\n[答案] B"},
+        {"role": "user",
+         "content": "请严格按照与上文相同的格式，创新生成难度很高的一道编程选择题目，不能与上文重复或相似,考察内容为" + content1 + "，不能太简单，单选多选都可"}
+    ])
+        print(data)
+    elif language_p == 2:
+
+        print()
     return
 #填空题
 def FillBlank(language_p:int = 1,num:int=1):
@@ -74,4 +92,4 @@ def Sort_and_Gen(language_p:int = 1,question_type:str = "Judgment",nums:int = 10
 
 if __name__ == "__main__":
 
-    Sort_and_Gen(2,"Judgment",5)
+    Sort_and_Gen(1,"Choice",5)
