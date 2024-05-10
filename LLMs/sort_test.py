@@ -23,8 +23,6 @@ def Judgment(language_p: int = 1, num: int = 1):
         print(data)
         return
 
-    return
-
 
 # 选择题
 def Choice(language_p: int = 1, num: int = 1, content1=""):
@@ -44,15 +42,23 @@ def Choice(language_p: int = 1, num: int = 1, content1=""):
         ])
         print(data)
     elif language_p == 2:
-        
+        data = api([
+            {"role": "system", "content": "你是一名人工智能出题助手，负责以如下格式生成编程选择题目，编程语言为Python"},
+            {"role": "user",
+             "content": "请严格按照与上文相同的格式，生成”难度很高“的编程选择题目"},
+            {"role": "assistant",
+             "content": "[题目] 关于__name__的说法，下列描述错误的是( )。\nA.它是Python提供的一个方法\nB.每个模块内部都有一个__name__属性\nC.当它的值为’main‘时，表示模块自身在运行\nD.当它的值不为’main’时，表示模块被引用\n[答案] A \n[解析] 选项A描述错误。在Python中，__name__是一个特殊的属性，而不是一个方法。"},
+            {"role": "user",
+             "content": "请严格按照与上文相同的格式，创新生成难度很高的一道编程选择题目，不能与上文重复或相似,考察内容为" + content1 + "，不能太简单，单选多选都可"}
+        ])
+        print(data)
 
-        print()
-    return
 
 
 # 填空题
 def FillBlank(language_p: int = 1, num: int = 1):
     if language_p == 1:
+
         return
 
     elif language_p == 2:
