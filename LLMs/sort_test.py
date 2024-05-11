@@ -7,7 +7,7 @@ api = api.use_Api
 
 
 # 判断题
-def Judgment(language_p: int = 1, num: int = 1):
+def Judgment(language_p: int = 1, num: int = 1, content1: str = ""):
     if language_p == 1:
         data = PTuning_main(num=num, ptuning_checkpoint="./PTuning_models/tfc_500/", chatdata={
             "input": "请出一道C++判断题，格式固定",
@@ -56,9 +56,22 @@ def Choice(language_p: int = 1, num: int = 1, content1=""):
 
 
 # 填空题
-def FillBlank(language_p: int = 1, num: int = 1):
+def FillBlank(language_p: int = 1, num: int = 1, content1: str = ""):
     if language_p == 1:
-
+        data = api([
+            {"role": "system", "content": "你是一名人工智能出题助手，负责以如下格式生成程序填空题目，编程语言为C++"},
+            {"role": "user",
+             "content": "请严格按照与上文相同的格式，生成”难度很高“的程序解释题目"},
+            {"role": "assistant",
+             "content": "[题目] C++的标识符由字母、____________和数字组成，而且第一个字符不能为数字。\n\n[答案] 下划线"},
+            {"role": "user",
+             "content": "请严格按照与上文相同的格式，生成”难度很高“的程序解释题目"},
+            {"role": "assistant",
+             "content": "[题目] 为了避免在嵌套的条件语句if-else中产生二义性，C++规定：else子句总是与______配对。\n\n[答案]其前面最近的if。"},
+            {"role": "user",
+             "content": "请严格按照与上文相同的格式，创新生成难度很高的一道程序解释题目，不能与上文重复或相似,考察内容为" + content1}
+        ])
+        print(data)
         return
 
     elif language_p == 2:
@@ -74,21 +87,56 @@ def ExplainCode(language_p: int = 1, num: int = 1, content1: str = ""):
         data = api([
             {"role": "system", "content": "你是一名人工智能出题助手，负责以如下格式生成程序填空题目，编程语言为C++"},
             {"role": "user",
-             "content": "请严格按照与上文相同的格式，生成”难度很高“的程序填空题目"},
+             "content": "请严格按照与上文相同的格式，生成”难度很高“的程序解释题目"},
             {"role": "assistant",
              "content": "[题目] 有以下C++程序段：\n#include \n\nclass Temperature {\npublic:\n static double celsiusTo Fahrenheit(double celsius) {\n return celsius * 9.0 / 5.0 + 32.0;\n }\n};\n\nint main() {\n double celsius = 25.0;\n double fahrenheit = Temperature::celsiusToFahrenheit(celsius);\n std::cout << celsius << \" degrees Celsius is \" << fahrenheit << \" degrees Fahrenheit.\" << std::endl;\n return 0;\n}\n这个程序的主要功能是什么？\n\n[答案] 这个程序的主要功能是将摄氏温度转换为华氏温度。程序定义了一个名为 Temperature 的类，其中包含一个静态成员函数 celsiusToFahrenheit，该函数接受一个摄氏温度值作为参数，并返回对应的华氏温度值。转换公式是 Fahrenheit = Celsius * 9.0 / 5.0 + 32.0"},
             {"role": "user",
-             "content": "请严格按照与上文相同的格式，创新生成难度很高的一道程序填空题目，不能与上文重复或相似,考察内容为" + content1}
+             "content": "请严格按照与上文相同的格式，创新生成难度很高的一道程序解释题目，不能与上文重复或相似,考察内容为" + content1}
         ])
         print(data)
         return
 
     elif language_p == 2:
+        data = api([
+            {"role": "system", "content": "你是一名人工智能出题助手，负责以如下格式生成程序填空题目，编程语言为C++"},
+            {"role": "user",
+             "content": "请严格按照与上文相同的格式，生成”难度很高“的程序填空题目"},
+            {"role": "assistant",
+             "content": "[题目] 有以下Python程序段：\nclass Player:\n    def __init__(self, name, level):\n        self.name = name\n        self.level = level\n\n    def get_stats(self):\n        return {\"name\": self.name, \"level\": self.level}\n\nplayer1 = Player(\"Alice\", 10)\nplayer_stats = player1.get_stats()\nprint(f\"Player {player_stats['name']} is at level {player_stats['level']}.\")\n这个程序的主要功能是什么？\n\n[答案] 这个程序的主要功能是创建一个玩家对象，并获取其统计信息。程序定义了一个名为 Player 的类，该类有两个属性：name 和 level，分别代表玩家的名字和等级。类中还有一个方法 get_stats，该方法返回一个包含玩家名字和等级的字典。"},
+            {"role": "user",
+             "content": "请严格按照与上文相同的格式，创新生成难度很高的一道程序解释题目，不能与上文重复或相似,考察内容为" + content1}
+        ])
+        print(data)
         return
     return
 
 
-def CodeCompletion(language_p: int = 1, num: int = 1):
+def CodeCompletion(language_p: int = 1, num: int = 1, content1: str = ""):
+    if language_p == 1:
+        data = api([
+        {"role": "system", "content": "你是一名人工智能出题助手，负责以如下格式生成编程题目，编程语言为python"},
+        {"role": "user",
+         "content": "请严格按照与上文相同的格式，但内容不可一样，生成”难度很高“的编程填空题目，要求考生根据[功能]补全[题目]中缺失的一行代码，需要你在出题时扣去并用___代替，题目答案的考察内容为重载运算符"},
+        {"role": "assistant",
+         "content": "[题目]#include <iostream>\nusing namespace std;\n\nclass Complex {\nprivate:\n    int real, imag;\npublic:\n    Complex(int r = 0, int i = 0) : real(r), imag(i) {}\n\n    Complex operator+(const Complex &obj) {\n        Complex res;\n        ______________  //需要考生填空\n        res.imag = imag + obj.imag;\n        return res;\n    }\n\n    friend ostream & operator<<(ostream &output, const Complex &obj) {\n        output << obj.real << \"+\" << obj.imag << \"i\";\n        return output;\n    }\n};\n\nint main() {\n    Complex c1(3, 4), c2(5, 6);\n    Complex c3 = c1 + c2;\n    cout << c3;\n    return 0;\n}\n\n\n[功能]\n在上述程序中，通过重载运算符，使得两个Complex对象可以相加。请补全上述程序中的一行，使得程序能够正确编译运行，并输出正确的结果。\n\n[答案] :\nres.real = real + obj.real;"},
+        {"role": "user",
+         "content": "请严格按照与上文相同的格式，但内容不可一样，现在语言改为python，生成”难度很高“的编程填空题目，要求考生根据[功能]补全[题目]中缺失的一行代码，需要你在出题时扣去并用___代替，考点必须为"+content1+""}
+    ])
+        print(data)
+        return
+
+    elif language_p == 2:
+        data = api([
+            {"role": "system", "content": "你是一名人工智能出题助手，负责以如下格式生成程序填空题目，编程语言为C++"},
+            {"role": "user",
+             "content": "请严格按照与上文相同的格式，生成”难度很高“的程序填空题目"},
+            {"role": "assistant",
+             "content": "[题目] 有以下Python程序段：\nclass Player:\n    def __init__(self, name, level):\n        self.name = name\n        self.level = level\n\n    def get_stats(self):\n        return {\"name\": self.name, \"level\": self.level}\n\nplayer1 = Player(\"Alice\", 10)\nplayer_stats = player1.get_stats()\nprint(f\"Player {player_stats['name']} is at level {player_stats['level']}.\")\n这个程序的主要功能是什么？\n\n[答案] 这个程序的主要功能是创建一个玩家对象，并获取其统计信息。程序定义了一个名为 Player 的类，该类有两个属性：name 和 level，分别代表玩家的名字和等级。类中还有一个方法 get_stats，该方法返回一个包含玩家名字和等级的字典。"},
+            {"role": "user",
+             "content": "请严格按照与上文相同的格式，创新生成难度很高的一道程序解释题目，不能与上文重复或相似,考察内容为" + content1}
+        ])
+        print(data)
+        return
     return
 
 
@@ -97,10 +145,11 @@ def BigProgram(language_p: int = 1, num: int = 1):
 
 
 def Algorithm(language_p: int = 1, num: int = 1):
+
     return
 
 
-def Sort_and_Gen(language_p: int = 1, question_type: str = "Judgment", nums: int = 10):
+def Sort_and_Gen(language_p: int = 1, question_type: str = "Judgment", nums: int = 1,content1:str=""):
     function_d = {
         'Judgment': partial(Judgment),
         'Choice': partial(Choice),
@@ -123,4 +172,4 @@ def Sort_and_Gen(language_p: int = 1, question_type: str = "Judgment", nums: int
 
 
 if __name__ == "__main__":
-    Sort_and_Gen(1, "Choice", 5)
+    Sort_and_Gen(1, "CodeCompletion", 1,"列表推导式")
