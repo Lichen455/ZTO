@@ -6,12 +6,6 @@ ProjectName and Description
 
 <!-- PROJECT SHIELDS -->
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -59,8 +53,6 @@ ProjectName and Description
 
 
 
-
-
 ###### 开发前的配置要求
 
 显存 > 23G
@@ -69,14 +61,21 @@ ProjectName and Description
 
 ###### **安装步骤**
 
-
-
 ```sh
-git clone https://github.com/shaojintian/Best_README_template.git
+git clone git@github.com:Lichen455/ZTO.git
+
+pip install -r requirements.txt
 ```
+cudnn torch 等建议单独安装
+
+需要下载 ChatGLM2-6B 模型文件 
+
+###### 如何使用
+
+
+
 
 ### 文件目录说明
-eg:
 
 ```
 ├── img
