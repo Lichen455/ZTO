@@ -18,7 +18,7 @@ ProjectName and Description
 
 <p align="center">
   <a href="https://github.com/Lichen455/ZTO/blob/main/img/zrx.png">
-    <img src="img/zrx.png" alt="Logo" width="80" height="80">
+    <img src="img/zrx.png" alt="Logo" width="245" height="80">
   </a>
 
   <h3 align="center">智舟题海 - AI</h3>
