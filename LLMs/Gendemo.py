@@ -125,7 +125,7 @@ def reset_state():
 
 
 def PTuning_main(num: int = 5, model_name_or_path: str = "/data/models/chatglm2/",
-                 ptuning_checkpoint: str = "./ChatGLM2-6B/PTuning_models/gp5_600/", pre_seq_len: int = 128,
+                 ptuning_checkpoint: str = None, pre_seq_len: int = 128,
                  chatdata: Dict[str, int] = {"input": "", "chatbot": [], "max_length": 8192, "top_p": 0.8,
                                              "temperature": 0.95, "history": []}) -> list:
     global model, tokenizer
