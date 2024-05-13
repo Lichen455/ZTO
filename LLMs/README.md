@@ -18,7 +18,7 @@ ProjectName and Description
 
 <p align="center">
   <a href="https://github.com/Lichen455/ZTO/img/zrx.png">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="img/zrx.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">"完美的"README模板</h3>
