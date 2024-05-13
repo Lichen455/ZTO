@@ -17,7 +17,7 @@ ProjectName and Description
 <br />
 
 <p align="center">
-  <a href="https://github.com/Lichen455/ZTO/img/zrx.png">
+  <a href="https://github.com/Lichen455/ZTO/blob/main/img/zrx.png">
     <img src="img/zrx.png" alt="Logo" width="80" height="80">
   </a>
 
