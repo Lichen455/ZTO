@@ -1,6 +1,19 @@
 from LLMs import Gendemo
 from functools import partial
 import api
+import argparse
+
+parser = argparse.ArgumentParser(description='web_demo参数解析')
+
+# 添加参数
+parser.add_argument('--question_type', type=str, help='生成题型调整')
+parser.add_argument('--programming_language', type=str, help='调整编程语言')
+parser.add_argument('--number_of_questions', type=str, help='生成题目数量')
+parser.add_argument('--output_filename', type=str, help='保存为json格式的文件名')
+parser.add_argument('--model_quantization', type=int, help='模型量化')
+parser.add_argument('--content', type=int, help='题目内容')
+# 解析参数
+args = parser.parse_args()
 
 PTuning_main = Gendemo.PTuning_main
 api = api.use_Api
@@ -52,7 +65,6 @@ def Choice(language_p: int = 1, num: int = 1, content1=""):
              "content": "请严格按照与上文相同的格式，创新生成难度很高的一道编程选择题目，不能与上文重复或相似,考察内容为" + content1 + "，不能太简单，单选多选都可"}
         ])
         print(data)
-
 
 
 # 填空题
@@ -114,14 +126,14 @@ def ExplainCode(language_p: int = 1, num: int = 1, content1: str = ""):
 def CodeCompletion(language_p: int = 1, num: int = 1, content1: str = ""):
     if language_p == 1:
         data = api([
-        {"role": "system", "content": "你是一名人工智能出题助手，负责以如下格式生成编程题目，编程语言为python"},
-        {"role": "user",
-         "content": "请严格按照与上文相同的格式，但内容不可一样，生成”难度很高“的编程填空题目，要求考生根据[功能]补全[题目]中缺失的一行代码，需要你在出题时扣去并用___代替，题目答案的考察内容为重载运算符"},
-        {"role": "assistant",
-         "content": "[题目]#include <iostream>\nusing namespace std;\n\nclass Complex {\nprivate:\n    int real, imag;\npublic:\n    Complex(int r = 0, int i = 0) : real(r), imag(i) {}\n\n    Complex operator+(const Complex &obj) {\n        Complex res;\n        ______________  //需要考生填空\n        res.imag = imag + obj.imag;\n        return res;\n    }\n\n    friend ostream & operator<<(ostream &output, const Complex &obj) {\n        output << obj.real << \"+\" << obj.imag << \"i\";\n        return output;\n    }\n};\n\nint main() {\n    Complex c1(3, 4), c2(5, 6);\n    Complex c3 = c1 + c2;\n    cout << c3;\n    return 0;\n}\n\n\n[功能]\n在上述程序中，通过重载运算符，使得两个Complex对象可以相加。请补全上述程序中的一行，使得程序能够正确编译运行，并输出正确的结果。\n\n[答案] :\nres.real = real + obj.real;"},
-        {"role": "user",
-         "content": "请严格按照与上文相同的格式，但内容不可一样，现在语言改为python，生成”难度很高“的编程填空题目，要求考生根据[功能]补全[题目]中缺失的一行代码，需要你在出题时扣去并用___代替，考点必须为"+content1+""}
-    ])
+            {"role": "system", "content": "你是一名人工智能出题助手，负责以如下格式生成编程题目，编程语言为python"},
+            {"role": "user",
+             "content": "请严格按照与上文相同的格式，但内容不可一样，生成”难度很高“的编程填空题目，要求考生根据[功能]补全[题目]中缺失的一行代码，需要你在出题时扣去并用___代替，题目答案的考察内容为重载运算符"},
+            {"role": "assistant",
+             "content": "[题目]#include <iostream>\nusing namespace std;\n\nclass Complex {\nprivate:\n    int real, imag;\npublic:\n    Complex(int r = 0, int i = 0) : real(r), imag(i) {}\n\n    Complex operator+(const Complex &obj) {\n        Complex res;\n        ______________  //需要考生填空\n        res.imag = imag + obj.imag;\n        return res;\n    }\n\n    friend ostream & operator<<(ostream &output, const Complex &obj) {\n        output << obj.real << \"+\" << obj.imag << \"i\";\n        return output;\n    }\n};\n\nint main() {\n    Complex c1(3, 4), c2(5, 6);\n    Complex c3 = c1 + c2;\n    cout << c3;\n    return 0;\n}\n\n\n[功能]\n在上述程序中，通过重载运算符，使得两个Complex对象可以相加。请补全上述程序中的一行，使得程序能够正确编译运行，并输出正确的结果。\n\n[答案] :\nres.real = real + obj.real;"},
+            {"role": "user",
+             "content": "请严格按照与上文相同的格式，但内容不可一样，现在语言改为python，生成”难度很高“的编程填空题目，要求考生根据[功能]补全[题目]中缺失的一行代码，需要你在出题时扣去并用___代替，考点必须为" + content1 + ""}
+        ])
         print(data)
         return
 
@@ -151,14 +163,16 @@ def Algorithm(language_p: int = 1, num: int = 1):
     print(data)
     return
 
-def test(language_p: int = 1,num: int = 1):
+
+def test(language_p: int = 1, num: int = 1):
     data = PTuning_main(num=num, ptuning_checkpoint="./ChatGLM2-6B3/ptuning/output5/checkpoint-50/", chatdata={
         "input": "请出一道复杂的算法题",
         "chatbot": [], "max_length": 8192, "top_p": 0.8, "temperature": 0.98, "history": []})
     print(data)
     return
 
-def Sort_and_Gen(language_p: int = 1, question_type: str = "Judgment", nums: int = 1,content1:str=""):
+
+def Sort_and_Gen(language_p: int = 1, question_type: str = "Judgment", nums: int = 1, content1: str = ""):
     function_d = {
         'Judgment': partial(Judgment),
         'Choice': partial(Choice),
@@ -167,7 +181,7 @@ def Sort_and_Gen(language_p: int = 1, question_type: str = "Judgment", nums: int
         'CodeCompletion': partial(CodeCompletion),
         'BigProgram': partial(BigProgram),
         'Algorithm': partial(Algorithm),
-        'test':partial(test),
+        'test': partial(test),
 
         '10': partial(Judgment),
         '20': partial(Choice),
@@ -183,5 +197,11 @@ def Sort_and_Gen(language_p: int = 1, question_type: str = "Judgment", nums: int
 
 
 if __name__ == "__main__":
-    #Sort_and_Gen(1, "Algorithm", 1,"列表推导式")
-    Sort_and_Gen(1, "test", 1,"列表推导式")
+    # Sort_and_Gen(1, "Algorithm", 1,"列表推导式")
+
+    if args.programming_language == "C++":
+        language_p = 1
+    elif args.programming_language == "Python":
+        language_p = 2
+
+    Sort_and_Gen(language_p, args.question_type, args.number_of_questions, args.content)
