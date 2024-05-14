@@ -7,7 +7,7 @@ export GLM_APIKEY="a12935687eac698a342e739c4820ac4c.wor32LL9tJN0voEY"
 python3 Sorter.py \
     --question_type "Judgment" \
     --programming_language "C++" \
-    --number_of_questions 31 \
+    --number_of_questions 5 \
     --output_filename "n" \
     --model_quantization 8 \
     --content "类" \

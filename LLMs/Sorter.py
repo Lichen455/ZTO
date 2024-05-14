@@ -26,6 +26,16 @@ def Judgment(language_p: int = 1, num: int = 1, content1: str = ""):
         data = PTuning_main(num=num, ptuning_checkpoint="./ChatGLM2-6B/PTuning_models/tfc_500/", chatdata={
             "input": "请出一道C++判断题，格式固定",
             "chatbot": [], "max_length": 8192, "top_p": 0.8, "temperature": 0.95, "history": []})
+        for i in range(len(data)):
+            data[i] = api([
+                {"role": "system", "content": "你是一名人工智能出题助手，负责补全以下题目，编程语言为C++"},
+                {"role": "user",
+                 "content": "请严格按照与上文相同的格式，补全该题目的[答案]与[解析]:[题目] C++类的析构函数可以被声明为虚函数，并在派生类中被覆盖以实现多态性。"},
+                {"role": "assistant",
+                 "content": "[题目] C++类的析构函数可以被声明为虚函数，并在派生类中被覆盖以实现多态性。 [答案] 正确 [解析]当基类的析构函数被声明为虚函数时，派生类的析构函数也会自动成为虚函数。"},
+                {"role": "user",
+                 "content": "请严格按照与上文相同的格式，补全该题目的[答案]与[解析]:" + data[i]}
+            ])
         print(data)
 
         return
