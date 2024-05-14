@@ -8,7 +8,7 @@ openai.api_key = "sk-GY7tkLBbSgTNcBuPDZ5JcBMFYY4VPoMGc4ZltTMbLvSpDILk"
 openai.api_base = "https://api.chatanywhere.com.cn/v1"
 
 
-def add(path, data1, data2):
+def addfile(path, data):
     # 如果文件不存在，用 "x" 模式创建一个新文件
     try:
         with open(path, "x", encoding="utf-8") as f:
@@ -28,12 +28,12 @@ def add(path, data1, data2):
         # 读取文件中的 JSON 数据
         datax = json.load(f)
         # 追加新的数据
-        datax.append({"prompt": data1, "response": data2})
+        datax.append({"result": data})
         # 将文件指针移动到开头
         f.seek(0)
         # 将修改后的数据写回文件中
         json.dump(datax, f, indent=4, ensure_ascii=False)
-
+    return
 
 def ZhipuAI(messages):
     response = client.chat.completions.create(

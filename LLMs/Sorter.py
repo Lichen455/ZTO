@@ -1,6 +1,6 @@
 import Gendemo
 from functools import partial
-import api
+from api import ZhipuAI, gpt_4_api_stream, use_Api, addfile
 import argparse
 
 parser = argparse.ArgumentParser(description='web_demo参数解析')
@@ -17,18 +17,21 @@ parser.add_argument('--content', type=str, help='题目内容')
 args = parser.parse_args()
 
 PTuning_main = Gendemo.PTuning_main
-api = api.use_Api
+api = use_Api
 
 
+def add_to_file(data:list=[]):
+    for i in data:
+        addfile(args.output_filename,i)
 # 判断题
 def Judgment(language_p: int = 1, num: int = 1, content1: str = ""):
     if language_p == 1:
         data = PTuning_main(num=num, ptuning_checkpoint="./ChatGLM2-6B/PTuning_models/tfc_500/", chatdata={
-            "input": "请出一道C++判断题，格式固定",
+            "input": "请出一道C++判断题，格式固定，内容为"+content1,
             "chatbot": [], "max_length": 8192, "top_p": 0.8, "temperature": 0.95, "history": []})
         for i in range(len(data)):
             data[i] = api([
-                {"role": "system", "content": "你是一名人工智能出题助手，负责补全以下题目，编程语言为C++"},
+                {"role": "system", "content": "你是一名人工智能出题助手，负责补全以下题目，编程语言为C++，解析尽量一句话，尽量短"},
                 {"role": "user",
                  "content": "请严格按照与上文相同的格式，补全该题目的[答案]与[解析]:[题目] C++类的析构函数可以被声明为虚函数，并在派生类中被覆盖以实现多态性。"},
                 {"role": "assistant",
@@ -36,14 +39,25 @@ def Judgment(language_p: int = 1, num: int = 1, content1: str = ""):
                 {"role": "user",
                  "content": "请严格按照与上文相同的格式，补全该题目的[答案]与[解析]:" + data[i]}
             ])
+        add_to_file(data)
         print(data)
 
         return
 
     elif language_p == 2:
         data = PTuning_main(num=num, ptuning_checkpoint="./ChatGLM2-6B/PTuning_models/tfp_500/", chatdata={
-            "input": "请出一道python判断题，格式固定，内容为字典",
+            "input": "请出一道python判断题，格式固定，内容为"+content1,
             "chatbot": [], "max_length": 8192, "top_p": 0.8, "temperature": 0.98, "history": []})
+        for i in range(len(data)):
+            data[i] = api([
+                {"role": "system", "content": "你是一名人工智能出题助手，负责补全以下题目，编程语言为Python，解析尽量一句话，尽量短"},
+                {"role": "user",
+                 "content": "请严格按照与上文相同的格式，补全该题目的[答案]与[解析]:[题目] 使用 `f.writelines()` 方法写入文件时，如果写入的序列中包含换行符，则这些换行符会被自动添加到文件的相应位置。"},
+                {"role": "assistant",
+                 "content": "[题目] 使用 `f.writelines()` 方法写入文件时，如果写入的序列中包含换行符，则这些换行符会被自动添加到文件的相应位置。 [答案] 错误 [解析] 在使用 f.writelines() 方法写入文件时，如果写入的序列中包含换行符，这些换行符不会被自动添加到文件的相应位置。"},
+                {"role": "user",
+                 "content": "请严格按照与上文相同的格式，补全该题目的[答案]与[解析]:" + data[i]}
+            ])
         print(data)
         return
 
@@ -217,3 +231,4 @@ if __name__ == "__main__":
 
     print(args.question_type)
     Sort_and_Gen(language_p, args.question_type, args.number_of_questions, args.content)
+    print(args.output_filename)

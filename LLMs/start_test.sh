@@ -2,13 +2,13 @@ usage() {
     echo "Usage: $0 --question_type <type> --programming_language <language> --number_of_questions <num> --output_filename <file> --model_quantization <4|8> --content <str>"
     exit 1
 }
-export GLM_APIKEY="a12935687eac698a342e739c4820ac4c.wor32LL9tJN0voEY"
-
+export GLM_APIKEY="a12935687eac698a342e739c4820ac4c.wor32LL9tJN0voEY" \
+export GLM_6B_PATH="/data/models/chatglm2/"
 python3 Sorter.py \
     --question_type "Judgment" \
-    --programming_language "C++" \
-    --number_of_questions 5 \
-    --output_filename "n" \
+    --programming_language "Python" \
+    --number_of_questions 2 \
+    --output_filename "ss.json" \
     --model_quantization 8 \
     --content "类" \
 

@@ -124,7 +124,7 @@ def reset_state():
     return [], [], None
 
 
-def PTuning_main(num: int = 5, model_name_or_path: str = "/data/models/chatglm2/",
+def PTuning_main(num: int = 5, model_name_or_path: str = os.environ.get('GLM_6B_PATH'),
                  ptuning_checkpoint: str = None, pre_seq_len: int = 128,
                  chatdata: Dict[str, int] = {"input": "", "chatbot": [], "max_length": 8192, "top_p": 0.8,
                                              "temperature": 0.95, "history": []}) -> list:
@@ -192,6 +192,6 @@ def Generator(chatdata):
 
 
 if __name__ == "__main__":
-    print(PTuning_main(chatdata={
+    print(PTuning_main(model_name_or_path=os.environ.get('GLM_6B_PATH'), chatdata={
         "input": "请严格按照与上文相同的格式，必须有以下字段：[题目]，创新生成难度很高的编程填空题目，不能与上文重复或相似,必须有____，不能太简单，答案只能一行",
         "chatbot": [], "max_length": 8192, "top_p": 0.8, "temperature": 0.95, "history": []}))
