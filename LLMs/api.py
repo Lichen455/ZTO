@@ -2,7 +2,8 @@ import openai
 import os, json, random
 from zhipuai import ZhipuAI
 
-client = ZhipuAI(api_key="a12935687eac698a342e739c4820ac4c.wor32LL9tJN0voEY")
+
+client = ZhipuAI(api_key=os.environ.get('GLM_APIKEY'))
 openai.api_key = "sk-GY7tkLBbSgTNcBuPDZ5JcBMFYY4VPoMGc4ZltTMbLvSpDILk"
 openai.api_base = "https://api.chatanywhere.com.cn/v1"
 
