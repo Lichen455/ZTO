@@ -2,7 +2,7 @@
 
 # 智舟题海
 
-ProjectName and Description
+几个本科生的可爱小项目
 
 <!-- PROJECT SHIELDS -->
 
@@ -56,7 +56,7 @@ ProjectName and Description
 
 若不满足条件，请考虑量化（量化所需内存参考ChatGLM2-6B），或者进行纯API调用
 
-###### **安装步骤**
+##### **安装步骤**
 
 ```sh
 git clone git@github.com:Lichen455/ZTO.git
@@ -67,15 +67,21 @@ cudnn torch 等建议单独安装
 
 需要下载 ChatGLM2-6B 模型文件，考虑所需微调模型多，分开进行储存
 
-###### 如何使用
+##### 部署
+
+pip install -r requirements.txt
+
+cudnn torch 等建议单独安装
+
+##### 如何使用
 
 您可以通过LLMs文件夹下的 start.sh 与 start_test.sh脚本进行调用
 
 ```
 cd LLMs
-bash start.sh
+bash start_test.sh
 ```
-
+start_test.sh :
 ```sh
 usage() {
     echo "Usage: $0 --question_type <type> --programming_language <language> --number_of_questions <num> --output_filename <file> --model_quantization <4|8> --content <str>"
@@ -138,18 +144,13 @@ GLM_APIKEY 需要的智谱AI GLM的APIkey
 
 ### 开发的架构 
 
-### 部署
-
-pip install -r requirements.txt
-
-cudnn torch 等建议单独安装
 
 ### 使用到的框架
 
 
 ### 贡献者
 
-伟大转圈鸽子
+智舟题海 开发团队
 
 #### 如何参与开源项目
 
@@ -157,7 +158,6 @@ cudnn torch 等建议单独安装
 
 
 1. 什么还有人参加这个项目？
-
 
 
 ### 版本控制
@@ -177,9 +177,4 @@ Q 2425113174
 Apache License 2.0
 
 ### 鸣谢
-
-
-
-
-
 
