@@ -29,7 +29,6 @@ ProjectName and Description
     <a href="https://github.com/shaojintian/Best_README_template/issues">提出新特性</a>
   </p>
 
-</p>
 
 
  本篇README.md面向开发者
@@ -51,13 +50,11 @@ ProjectName and Description
 
 ### 上手指南
 
-
-
 ###### 开发前的配置要求
 
 显存 > 23G
 
-若不满足条件，请考虑量化，或者进行纯API调用
+若不满足条件，请考虑量化（量化所需内存参考ChatGLM2-6B），或者进行纯API调用
 
 ###### **安装步骤**
 
@@ -68,11 +65,57 @@ pip install -r requirements.txt
 ```
 cudnn torch 等建议单独安装
 
-需要下载 ChatGLM2-6B 模型文件 
+需要下载 ChatGLM2-6B 模型文件，考虑所需微调模型多，分开进行储存
 
 ###### 如何使用
 
+您可以通过LLMs文件夹下的 start.sh 与 start_test.sh脚本进行调用
 
+```
+cd LLMs
+bash start.sh
+```
+
+```sh
+usage() {
+    echo "Usage: $0 --question_type <type> --programming_language <language> --number_of_questions <num> --output_filename <file> --model_quantization <4|8> --content <str>"
+    exit 1
+}
+export GLM_APIKEY="a12935687eac698a342e739c4820ac4c.wor32LL9tJN0voEY"
+
+python3 Sorter.py \
+    --question_type "Judgment" \
+    --programming_language "C++" \
+    --number_of_questions 31 \
+    --output_filename "n" \
+    --model_quantization 8 \
+    --content "类" \
+
+ : '
+question_type 题型
+  填入英文和数字都可以
+  10 / Judgment->通用判断题
+  20 / Choice->通用选择题
+  30 / FillBlank->通用填空题
+  40 / ExplainCode->解释程序题
+  50 / CodeCompletion->程序填空题（补全程序）
+  
+  70 / Algorithm->算法题
+
+programming_language 语言
+可填 C++ or Python
+
+number_of_questions 题目数量 int
+
+output_filename 若输出为一个json文件，该文件的名称
+
+model_quantization 若加载模型，模型量化 4 or 8
+
+content 出题相关内容
+
+GLM_APIKEY 需要的智谱AI GLM的APIkey
+'
+```
 
 
 ### 文件目录说明
